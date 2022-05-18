@@ -58,9 +58,9 @@ def SixtyTranslator(inputList: list):
         proString = inputString
         outputString = ''
         fullshade = 'hfszv'
-        mostshade = 'mngcboyu'
-        halfshade = 'aeixjwrl'
-        lightshade = 'dktpq'
+        mostshade = 'mngcboyu3457'
+        halfshade = 'aeixjwrl9160'
+        lightshade = 'dktpq28'
         for phoneme in proString:
             if phoneme in fullshade:
                 outputString += '█'
