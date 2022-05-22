@@ -5,7 +5,7 @@ Created on Tue May 17 16:50:44 2022
 @author: atbaldwin
 """
 import tkinter as tk
-from tkinter import (filedialog, ttk, Button, N, W, E, S, Tk)
+from tkinter import (filedialog, ttk, Button, N, W, E, S, Tk, Label)
 
 filename = str()
 outputtext = str()
@@ -27,7 +27,7 @@ def Ui():
         filename = filedialog.askopenfilename(
             initialdir='/', title="Select .txt file")
         ttk.Label(mainframe, text=filename +
-                  ': loaded').grid(column=4, row=1, sticky=(W))
+                  ': loaded').grid(column=4, row=2, sticky=(W))
         with open(filename) as f:
             outputtext = f.readlines()
         #print(outputtext)
@@ -35,19 +35,28 @@ def Ui():
     
     ###text field for short strings
     shortstring_entry = ttk.Entry(mainframe, width=70, textvariable=shortString)
-    shortstring_entry.grid(column=4, row=2)
+    shortstring_entry.grid(column=4, row=4)
     
     ###Buttons
     filenameButton = Button(mainframe, text='Load New .txt', command=lambda: (
         filenamefetch()))
-    filenameButton.grid(column=3, row=1)
+    filenameButton.grid(column=3, row=2)
     quitButton = Button(mainframe, text="Exit Program", command=root.destroy)
     quitButton.grid(column=0, row=1)
-    stringButton = Button(mainframe, text="Process String", command=lambda: SixtyTranslator(str(shortString.get())))
-    stringButton.grid(column=2, row=2)
+    stringButton = Button(mainframe, text="Process String", command=lambda: SixtyTranslator([str(shortString.get())]))
+    stringButton.grid(column=2, row=4)
     translatetxtButton = Button(mainframe, text="Process .txt file", command=lambda: SixtyTranslator(outputtext))
-    translatetxtButton.grid(column=2, row=1)
+    translatetxtButton.grid(column=2, row=2)
     
+    ##Text labels
+    option1 = Label(mainframe, text='Option 1:')
+    option1.grid(column=3, row=1)
+    option2 = Label(mainframe, text='Option 2:')
+    option2.grid(column=3, row=3)
+    txtInstructLabel = Label(mainframe, text='Load a .txt file using the \"Load New .txt\" button, then click \"Process .txt file\":')
+    txtInstructLabel.grid(column=4, row=1, sticky=(W))
+    strInstructLabel = Label(mainframe, text='Enter desired alphanumeric text in the box below, then click \"Process String\":')
+    strInstructLabel.grid(column=4, row=3, sticky=(W))
     for child in mainframe.winfo_children():
         child.grid_configure(padx=5, pady=5)
     root.mainloop()
@@ -55,23 +64,22 @@ def Ui():
 def SixtyTranslator(inputList: list):
     outputList = []
     for inputString in inputList:
-        proString = inputString
         outputString = ''
         fullshade = 'hfszv'
         mostshade = 'mngcboyu3457'
         halfshade = 'aeixjwrl9160'
         lightshade = 'dktpq28'
-        for phoneme in proString:
-            if phoneme in fullshade:
+        for character in inputString.lower():
+            if character in fullshade:
                 outputString += '█'
-            elif phoneme in mostshade:
+            elif character in mostshade:
                 outputString += '▓'
-            elif phoneme in halfshade:
+            elif character in halfshade:
                 outputString += '▒'
-            elif phoneme in lightshade:
+            elif character in lightshade:
                 outputString += '░'
             
-            if phoneme == ' ':
+            if character == ' ':
              outputString += ' '
         outputList.append(outputString + '\n')
     #print(outputList)
@@ -81,5 +89,5 @@ def SixtyTranslator(inputList: list):
     print('Done.')
     return outputString
 
-#SixtyTranslator('I dont know what to do, maybe you can help. Extreme pants.')
+#SixtyTranslator(['I dont know what to do, maybe you can help. Extreme pants.'])
 Ui()
